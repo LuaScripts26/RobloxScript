@@ -2,11 +2,11 @@
 
 - Fullbright Script
 ```
-https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fullbright.lua
+loadstring(game:HttpGet(https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fullbright.lua))()
 ```
 - DeadRails Teamcheck Script
 ```
-https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/deadrailsteamcheck.lua
+loadstring(game:HttpGet(https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/deadrailsteamcheck.lua))()
 ```
 
 # DOWNLOAD XENO EXECUTOR (**Free** & **Keyless** executor)
