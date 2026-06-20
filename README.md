@@ -4,9 +4,6 @@
 ```
 loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/main.lua"))()
 ```
-```
-loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/blackowl1231'sZ3US.lua"))()
-```
 - Fullbright Script
 ```
 loadstring(game:HttpGet(https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fullbright.lua))()
