@@ -205,43 +205,43 @@ textLabel7.Parent = planks
 
 planks.Parent = frame
 
-local hypershot = Instance.new("Frame")
-hypershot.Name = "Hypershot"
-hypershot.BackgroundColor3 = Color3.fromRGB(17, 18, 20)
-hypershot.BackgroundTransparency = 0.9
-hypershot.BorderColor3 = Color3.fromRGB(0, 0, 0)
-hypershot.BorderSizePixel = 0
-hypershot.Position = UDim2.fromScale(0.03, 0.58694)
-hypershot.Size = UDim2.fromOffset(330, 65)
+local OneTap = Instance.new("Frame")
+OneTap.Name = "OneTap"
+OneTap.BackgroundColor3 = Color3.fromRGB(17, 18, 20)
+OneTap.BackgroundTransparency = 0.9
+OneTap.BorderColor3 = Color3.fromRGB(0, 0, 0)
+OneTap.BorderSizePixel = 0
+OneTap.Position = UDim2.fromScale(0.03, 0.58694)
+OneTap.Size = UDim2.fromOffset(330, 65)
 
-local hypershotStroke = Instance.new("UIStroke")
-hypershotStroke.Name = "UIStroke"
-hypershotStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-hypershotStroke.Color = Color3.fromRGB(26, 29, 37)
-hypershotStroke.Thickness = 1.9
-hypershotStroke.Parent = hypershot
+local OneTapStroke = Instance.new("UIStroke")
+OneTapStroke.Name = "UIStroke"
+OneTapStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+OneTapStroke.Color = Color3.fromRGB(26, 29, 37)
+OneTapStroke.Thickness = 1.9
+OneTapStroke.Parent = OneTap
 
-local uICornerHypershot = Instance.new("UICorner")
-uICornerHypershot.Name = "UICorner"
-uICornerHypershot.CornerRadius = UDim.new(0, 25)
-uICornerHypershot.Parent = hypershot
+local uICornerOneTap = Instance.new("UICorner")
+uICornerOneTap.Name = "UICorner"
+uICornerOneTap.CornerRadius = UDim.new(0, 25)
+uICornerOneTap.Parent = OneTap
 
-local textLabelHypershot = Instance.new("TextLabel")
-textLabelHypershot.Name = "TextLabel"
-textLabelHypershot.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-textLabelHypershot.BackgroundTransparency = 1
-textLabelHypershot.BorderColor3 = Color3.fromRGB(0, 0, 0)
-textLabelHypershot.BorderSizePixel = 0
-textLabelHypershot.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
-textLabelHypershot.Position = UDim2.fromScale(0.15, 0.0462)
-textLabelHypershot.Size = UDim2.fromOffset(250, 58)
-textLabelHypershot.Text = "Hypershot"
-textLabelHypershot.TextColor3 = Color3.fromRGB(255, 255, 255)
-textLabelHypershot.TextSize = 62
-textLabelHypershot.TextWrapped = true
-textLabelHypershot.Parent = hypershot
+local textLabelOneTap = Instance.new("TextLabel")
+textLabelOneTap.Name = "TextLabel"
+textLabelOneTap.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+textLabelOneTap.BackgroundTransparency = 1
+textLabelOneTap.BorderColor3 = Color3.fromRGB(0, 0, 0)
+textLabelOneTap.BorderSizePixel = 0
+textLabelOneTap.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
+textLabelOneTap.Position = UDim2.fromScale(0.15, 0.0462)
+textLabelOneTap.Size = UDim2.fromOffset(250, 58)
+textLabelOneTap.Text = "OneTap"
+textLabelOneTap.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabelOneTap.TextSize = 62
+textLabelOneTap.TextWrapped = true
+textLabelOneTap.Parent = OneTap
 
-hypershot.Parent = frame
+OneTap.Parent = frame
 
 local universal = Instance.new("Frame")
 universal.Name = "Universal"
@@ -430,6 +430,47 @@ local confirmStroke = Instance.new("UIStroke")
 confirmStroke.Color = Color3.fromRGB(26, 29, 37)
 confirmStroke.Thickness = 2
 confirmStroke.Parent = confipanel
+
+local confirmText = Instance.new("TextLabel")
+confirmText.Name = "ConfirmText"
+confirmText.Parent = confipanel
+confirmText.BackgroundTransparency = 1
+confirmText.Size = UDim2.new(1, -20, 0, 70)
+confirmText.Position = UDim2.new(0, 10, 0, 10)
+confirmText.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
+confirmText.Text = "WARNING: This script is may not be undetected! Running it may result in a ban.\nDo you still want to select it?"
+confirmText.TextColor3 = Color3.fromRGB(255, 255, 255)
+confirmText.TextSize = 20
+confirmText.TextWrapped = true
+confirmText.TextXAlignment = Enum.TextXAlignment.Center
+
+local confirmYes = Instance.new("TextButton")
+confirmYes.Name = "ConfirmYes"
+confirmYes.Parent = confipanel
+confirmYes.BackgroundColor3 = Color3.fromRGB(140, 155, 208)
+confirmYes.Size = UDim2.new(0, 100, 0, 35)
+confirmYes.Position = UDim2.new(0.5, -110, 1, -45)
+confirmYes.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
+confirmYes.Text = "Yes"
+confirmYes.TextColor3 = Color3.fromRGB(255, 255, 255)
+confirmYes.TextSize = 18
+local yesCorner = Instance.new("UICorner")
+yesCorner.CornerRadius = UDim.new(0, 8)
+yesCorner.Parent = confirmYes
+
+local confirmNo = Instance.new("TextButton")
+confirmNo.Name = "ConfirmNo"
+confirmNo.Parent = confipanel
+confirmNo.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+confirmNo.Size = UDim2.new(0, 100, 0, 35)
+confirmNo.Position = UDim2.new(0.5, 10, 1, -45)
+confirmNo.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
+confirmNo.Text = "No"
+confirmNo.TextColor3 = Color3.fromRGB(255, 255, 255)
+confirmNo.TextSize = 18
+local noCorner = Instance.new("UICorner")
+noCorner.CornerRadius = UDim.new(0, 8)
+noCorner.Parent = confirmNo
 
 local rivalsToggleContainer = Instance.new("Frame")
 rivalsToggleContainer.Name = "RivalsToggleContainer"
@@ -654,7 +695,7 @@ local function selectScript(scriptFrame, scriptName)
 	counterbloxStroke.Color = defaultColor
 	universalStroke.Color = defaultColor
 	gunfightArenaStroke.Color = defaultColor
-	hypershotStroke.Color = defaultColor
+	OneTapStroke.Color = defaultColor
 
 	rivalsToggleContainer.Visible = false
 	VersionToggle.Visible = false
@@ -691,16 +732,28 @@ planks.InputBegan:Connect(function(input)
 	end
 end)
 
-hypershot.InputBegan:Connect(function(input)
+OneTap.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		selectScript(hypershot, "Hypershot")
+		selectScript(OneTap, "OneTap")
 	end
 end)
 
 rivals.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        selectScript(rivals, "Rivals")
+		confipanel.Visible = true
+		blackidk.Visible = true
 	end
+end)
+
+confirmYes.MouseButton1Click:Connect(function()
+	confipanel.Visible = false
+	blackidk.Visible = false
+	selectScript(rivals, "Rivals")
+end)
+
+confirmNo.MouseButton1Click:Connect(function()
+	confipanel.Visible = false
+	blackidk.Visible = false
 end)
 
 counterblox.InputBegan:Connect(function(input)
@@ -745,8 +798,9 @@ loadbtn.MouseButton1Click:Connect(function()
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/Games/Z3US%20Arsenal%20Beta.lua"))()
 		elseif selectedOption == "Planks" then
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/Games/Z3US%20Planks.lua"))()
-		elseif selectedOption == "Hypershot" then
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/Games/Z3US%20Hypershot.lua"))()
+		elseif selectedOption == "OneTap" then
+			getgenv().SCRIPT_KEY = ""
+			loadstring(game:HttpGet("https://api.jnkie.com/api/v1/luascripts/public/2548ffbebdf21063cd4083f93a27ac276d44d1cb6503093d9c3290c3dfd954e3/download"))()
 		elseif selectedOption == "Rivals" then
 			repeat task.wait() until game:IsLoaded()
 			repeat task.wait() until game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character
@@ -758,8 +812,7 @@ loadbtn.MouseButton1Click:Connect(function()
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/Games/Test.lua"))()
 		elseif selectedOption == "Counterblox" then
 			if version == "New" then
-				getgenv().SCRIPT_KEY = ""
-				loadstring(game:HttpGet("https://api.junkie-development.de/api/v1/luascripts/public/2438cfd42af811d55492e854318eeda24a73aa5d0b11a403ec1f7542abd8f2f0/download"))()
+				game:GetService("Players").LocalPlayer:Kick("This script is detected and will get u banned")
 			else
 				loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/refs/heads/main/Games/Z3US%20Counterblox.lua"))()
 			end
