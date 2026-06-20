@@ -431,47 +431,6 @@ confirmStroke.Color = Color3.fromRGB(26, 29, 37)
 confirmStroke.Thickness = 2
 confirmStroke.Parent = confipanel
 
-local confirmText = Instance.new("TextLabel")
-confirmText.Name = "ConfirmText"
-confirmText.Parent = confipanel
-confirmText.BackgroundTransparency = 1
-confirmText.Size = UDim2.new(1, -20, 0, 70)
-confirmText.Position = UDim2.new(0, 10, 0, 10)
-confirmText.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
-confirmText.Text = "WARNING: This script is may not be undetected! Running it may result in a ban.\nDo you still want to select it?"
-confirmText.TextColor3 = Color3.fromRGB(255, 255, 255)
-confirmText.TextSize = 20
-confirmText.TextWrapped = true
-confirmText.TextXAlignment = Enum.TextXAlignment.Center
-
-local confirmYes = Instance.new("TextButton")
-confirmYes.Name = "ConfirmYes"
-confirmYes.Parent = confipanel
-confirmYes.BackgroundColor3 = Color3.fromRGB(140, 155, 208)
-confirmYes.Size = UDim2.new(0, 100, 0, 35)
-confirmYes.Position = UDim2.new(0.5, -110, 1, -45)
-confirmYes.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
-confirmYes.Text = "Yes"
-confirmYes.TextColor3 = Color3.fromRGB(255, 255, 255)
-confirmYes.TextSize = 18
-local yesCorner = Instance.new("UICorner")
-yesCorner.CornerRadius = UDim.new(0, 8)
-yesCorner.Parent = confirmYes
-
-local confirmNo = Instance.new("TextButton")
-confirmNo.Name = "ConfirmNo"
-confirmNo.Parent = confipanel
-confirmNo.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-confirmNo.Size = UDim2.new(0, 100, 0, 35)
-confirmNo.Position = UDim2.new(0.5, 10, 1, -45)
-confirmNo.FontFace = Font.new("rbxasset://fonts/families/Nunito.json")
-confirmNo.Text = "No"
-confirmNo.TextColor3 = Color3.fromRGB(255, 255, 255)
-confirmNo.TextSize = 18
-local noCorner = Instance.new("UICorner")
-noCorner.CornerRadius = UDim.new(0, 8)
-noCorner.Parent = confirmNo
-
 local rivalsToggleContainer = Instance.new("Frame")
 rivalsToggleContainer.Name = "RivalsToggleContainer"
 rivalsToggleContainer.Parent = frame
