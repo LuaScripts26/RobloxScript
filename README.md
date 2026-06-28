@@ -6,15 +6,15 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/blackowl1231/Z3US/ref
 ```
 - Fullbright Script [BETA]
 ```
-loadstring(game:HttpGet(https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fullbright.lua))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fullbright.lua"))()
 ```
 - DeadRails Teamcheck Script
 ```
-loadstring(game:HttpGet(https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/deadrailsteamcheck.lua))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/deadrailsteamcheck.lua"))()
 ```
 - Fly Script [BETA]
 ```
-loadstring(game:HttpGet(https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fly.lua))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaScripts26/RobloxScript/refs/heads/main/fly.lua"))()
 ```
 
 # DOWNLOAD XENO EXECUTOR (Free & Keyless executor)
