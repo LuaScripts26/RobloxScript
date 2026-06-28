@@ -1,0 +1,16 @@
+local RunService = game:GetService("RunService")
+local localPlayer = game:GetService("Players").LocalPlayer
+RunService.Heartbeat:Connect(function()
+  local character = localPlayer.Character
+  local hrp = character and character:FindFirstChild("HumanoidRootPart")
+  local hum = character and character:FindFirstChildOfClass("Humanoid")
+  if hrp and hum and hum.Health > 0 then
+    local AntiVoid_Height = 2.9
+    if hrp.Position.Y <= AntiVoid_Height then
+      hrp.AssemblyLinearVelocity = Vector3.zero
+      hrp.AssemblyAngularVelocity = Vector3.zero
+      hrp.CFrame = CFrame.new(hrp.Position.X, AntiVoid_Height + 0.1, hrp.Position.Z)
+    end
+  end
+end)
+--workspace.FallenPartsDestroyHeight + 120
