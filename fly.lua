@@ -6,7 +6,7 @@ local isEnabled = false
 local scriptRunning = true
 local flyConnection = nil
 local antiVoidConnection = nil
-local flySpeed = 80
+local flySpeed = 20
 local verticalControlsEnabled = false 
 local bodyVelocity = nil
 local bodyGyro = nil
@@ -27,7 +27,7 @@ MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Parent = ScreenGui
-MainFrame.Draggable = true
+local dragging, dragInput, dragStart, startPos
 local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 8)
 UICorner.Parent = MainFrame
@@ -132,26 +132,49 @@ local function updateSliderFromMouse()
     local percentage = math.clamp(relativeX / sliderWidth, 0, 1)
     updateUIFromSpeed(math.round(percentage * 1000))
 end
-SliderBar.MouseButton1Down:Connect(function() 
-    isDragging = true 
-    MainFrame.Draggable = false 
+SliderBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        isDragging = true
+        updateSliderFromMouse()
+    end
 end)
 SliderFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         isDragging = true
-        MainFrame.Draggable = false 
         updateSliderFromMouse()
     end
+end)
+local function updateDrag(input)
+	local delta = input.Position - dragStart
+	MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+MainFrame.InputBegan:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and not isDragging then
+		dragging = true
+		dragStart = input.Position
+		startPos = MainFrame.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+MainFrame.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
 end)
 UserInputService.InputChanged:Connect(function(input)
-    if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+    if isDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
         updateSliderFromMouse()
-    end
+    elseif input == dragInput and dragging then
+		updateDrag(input)
+	end
 end)
 UserInputService.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then 
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then 
         isDragging = false 
-        MainFrame.Draggable = true 
     end
 end)
 VerticalToggleButton.MouseButton1Click:Connect(function()
@@ -170,40 +193,65 @@ end)
 UserInputService.InputEnded:Connect(function(input)
     keysPressed[input.KeyCode] = nil
 end)
+local bodyPosition = nil
 local function startFly()
     if flyConnection then flyConnection:Disconnect() end
     local camera = workspace.CurrentCamera
     local character = localPlayer.Character
     local hrp = character and character:FindFirstChild("HumanoidRootPart")
-    if not hrp then return end
-    bodyVelocity = Instance.new("BodyVelocity")
-    bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-    bodyVelocity.Velocity = Vector3.zero
-    bodyVelocity.Parent = hrp
-    bodyGyro = Instance.new("BodyGyro")
-    bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
-    bodyGyro.CFrame = hrp.CFrame
-    bodyGyro.Parent = hrp
+    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+    if not hrp or not humanoid then return end
+
+    local animator = humanoid:FindFirstChildOfClass("Animator")
+    if animator then
+        for _, track in ipairs(animator:GetPlayingAnimationTracks()) do
+            track:Stop(0)
+        end
+    end
+
+    if bodyVelocity then bodyVelocity:Destroy() bodyVelocity = nil end
+    if bodyPosition then bodyPosition:Destroy() bodyPosition = nil end
+    if bodyGyro then bodyGyro:Destroy() bodyGyro = nil end
+
+    hrp.AssemblyLinearVelocity = Vector3.zero
+    hrp.AssemblyAngularVelocity = Vector3.zero
+
+    local lastPosition = hrp.Position
+
     flyConnection = RunService.Heartbeat:Connect(function()
         if not isEnabled or not scriptRunning then return end
         character = localPlayer.Character
         hrp = character and character:FindFirstChild("HumanoidRootPart")
-        if hrp and bodyVelocity and bodyGyro then
-            bodyGyro.CFrame = camera.CFrame
+        humanoid = character and character:FindFirstChildOfClass("Humanoid")
+        
+        if hrp then
+            if animator then
+                for _, track in ipairs(animator:GetPlayingAnimationTracks()) do
+                    track:Stop(0)
+                end
+            end
+
+            hrp.AssemblyLinearVelocity = Vector3.zero
+            hrp.AssemblyAngularVelocity = Vector3.zero
+
+            local cameraLook = camera.CFrame.LookVector
             local moveVector = Vector3.new(0, 0, 0)
-            if keysPressed[Enum.KeyCode.W] then moveVector = moveVector + camera.CFrame.LookVector end
-            if keysPressed[Enum.KeyCode.S] then moveVector = moveVector - camera.CFrame.LookVector end
+
+            if keysPressed[Enum.KeyCode.W] then moveVector = moveVector + cameraLook end
+            if keysPressed[Enum.KeyCode.S] then moveVector = moveVector - cameraLook end
             if keysPressed[Enum.KeyCode.A] then moveVector = moveVector - camera.CFrame.RightVector end
             if keysPressed[Enum.KeyCode.D] then moveVector = moveVector + camera.CFrame.RightVector end
             if verticalControlsEnabled then
                 if keysPressed[Enum.KeyCode.Space] then moveVector = moveVector + Vector3.new(0, 1, 0) end
                 if keysPressed[Enum.KeyCode.LeftShift] then moveVector = moveVector - Vector3.new(0, 1, 0) end
             end
+
             if moveVector.Magnitude > 0 then
-                bodyVelocity.Velocity = moveVector.Unit * flySpeed * 1.5
-            else
-                bodyVelocity.Velocity = Vector3.zero
+                local speedMultiplier = (flySpeed / 10) * 1.5
+                lastPosition = lastPosition + (moveVector.Unit * speedMultiplier)
             end
+
+            hrp.CFrame = CFrame.lookAt(lastPosition, lastPosition + cameraLook)
         end
     end)
 end
@@ -212,22 +260,15 @@ local function stopFly()
         flyConnection:Disconnect()
         flyConnection = nil
     end
+    local character = localPlayer.Character
+    local hrp = character and character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        hrp.AssemblyLinearVelocity = Vector3.zero
+        hrp.AssemblyAngularVelocity = Vector3.zero
+    end
     if bodyVelocity then bodyVelocity:Destroy() bodyVelocity = nil end
+    if bodyPosition then bodyPosition:Destroy() bodyPosition = nil end
     if bodyGyro then bodyGyro:Destroy() bodyGyro = nil end
-end
-local function startAntiVoid()
-    if antiVoidConnection then antiVoidConnection:Disconnect() end
-    antiVoidConnection = RunService.Heartbeat:Connect(function()
-        if not scriptRunning then return end
-        local character = localPlayer.Character
-        local hrp = character and character:FindFirstChild("HumanoidRootPart")
-        if hrp and hrp.Position.Y <= ANTIVOID_HEIGHT then
-            hrp.AssemblyLinearVelocity = Vector3.zero
-            hrp.AssemblyAngularVelocity = Vector3.zero
-            if bodyVelocity then bodyVelocity.Velocity = Vector3.zero end
-            hrp.CFrame = CFrame.new(hrp.Position.X, ANTIVOID_HEIGHT + 0.1, hrp.Position.Z)
-        end
-    end)
 end
 local function startAntiVoid()
     if antiVoidConnection then antiVoidConnection:Disconnect() end
