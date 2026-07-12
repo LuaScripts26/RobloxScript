@@ -5,18 +5,30 @@ local UserInputService = game:GetService("UserInputService")
 if CoreGui:FindFirstChild("DeadrailsPlayerChecker") then 
 CoreGui.DeadrailsPlayerChecker:Destroy() 
 end
-local TRAIN_NAMES = {"80sTrain", "cattle", "golden", "presidential", "passenger", "armor", "wooden", "frost", "christmas", "dracula", "ghost", "yeat", "default"}
+local TRAIN_NAMES = {"locomotive", "80sTrain", "cattle", "presidential", "golden", "passenger", "armor", "wooden", "frost", "christmas_event_2025", "dracula", "ghost", "yeat", "default"}
+local RunService = game:GetService("RunService")
+local TRAIN_LOOKUP = {}
+for _, name in ipairs(TRAIN_NAMES) do
+TRAIN_LOOKUP[name] = true
+end
 local activeTrains = {}
 local heartbeatConnection = nil
+local accumulatedTime = 0
 local function updateActiveTrains()
 table.clear(activeTrains)
-for _, name in ipairs(TRAIN_NAMES) do
-local found = workspace:FindFirstChild(name)
-if found and found:IsA("Model") then 
-activeTrains[found] = true
+for _, child in ipairs(workspace:GetChildren()) do
+if child:IsA("Model") and TRAIN_LOOKUP[child.Name] then
+activeTrains[child] = true
 end
 end
 end
+heartbeatConnection = RunService.Heartbeat:Connect(function(dt)
+accumulatedTime = accumulatedTime + dt
+if accumulatedTime >= 0.2 then
+accumulatedTime = accumulatedTime % 0.2
+updateActiveTrains()
+end
+end)
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "DeadrailsPlayerChecker"
 ScreenGui.ResetOnSpawn = false
