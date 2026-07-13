@@ -140,12 +140,12 @@ return false
 end
 local dragging, dragInput, dragStart, startPos
 local function updateDrag(input)
-local delta = input.Position - dragStart
+local moveGui = input.Position - dragStart
 MainFrame.Position = UDim2.new(
 startPos.X.Scale, 
-startPos.X.Offset + delta.X, 
+startPos.X.Offset + moveGui.X, 
 startPos.Y.Scale, 
-startPos.Y.Offset + delta.Y
+startPos.Y.Offset + moveGui.Y
 )
 end
 HeaderFrame.InputBegan:Connect(function(input)
