@@ -153,8 +153,8 @@ updateSliderFromMouse()
 end
 end)
 local function updateDrag(input)
-local delta = input.Position - dragStart
-MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+local moveGui = input.Position - dragStart
+MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + moveGui.X, startPos.Y.Scale, startPos.Y.Offset + moveGui.Y)
 end
 MainFrame.InputBegan:Connect(function(input)
 if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and not isDragging then
