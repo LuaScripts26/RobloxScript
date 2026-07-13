@@ -12,8 +12,8 @@ local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
 if atmosphere then
 originalAtmosphereDensity = atmosphere.Density
 end
-local isEnabled = false
-local fogRemovalEnabled = false
+local customAmbientEnabled = false
+local fogRemoveEnabled = false
 local scriptRunning = true
 local updateConnection = nil
 local currentBrightness = 255
@@ -187,8 +187,8 @@ end
 end)
 VerticalToggleButton.MouseButton1Click:Connect(function()
 if not scriptRunning then return end
-fogRemovalEnabled = not fogRemovalEnabled
-if fogRemovalEnabled then
+fogRemoveEnabled = not fogRemoveEnabled
+if fogRemoveEnabled then
 VerticalToggleButton.TextColor3 = Color3.fromRGB(180, 240, 180)
 else
 VerticalToggleButton.TextColor3 = Color3.fromRGB(240, 180, 180)
@@ -202,11 +202,11 @@ end
 end)
 updateConnection = RunService.Heartbeat:Connect(function()
 if not scriptRunning then return end
-if isEnabled then
+if customAmbientEnabled then
 Lighting.Ambient = AmbientCLR
 Lighting.OutdoorAmbient = AmbientCLR
 end
-if fogRemovalEnabled then
+if fogRemoveEnabled then
 Lighting.FogStart = 0
 Lighting.FogEnd = 99999999
 local currentAtmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
@@ -217,8 +217,8 @@ end
 end)
 ToggleButton.MouseButton1Click:Connect(function()
 if not scriptRunning then return end
-isEnabled = not isEnabled
-if isEnabled then
+customAmbientEnabled = not customAmbientEnabled
+if customAmbientEnabled then
 ToggleButton.Text = "ON"
 ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
 else
