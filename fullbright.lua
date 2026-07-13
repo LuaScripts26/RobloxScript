@@ -73,21 +73,21 @@ VerticalToggleButton.Parent = MainFrame
 local VerticalCorner = Instance.new("UICorner")
 VerticalCorner.CornerRadius = UDim.new(0, 4)
 VerticalCorner.Parent = VerticalToggleButton
-local SpeedTextBox = Instance.new("TextBox")
-SpeedTextBox.Name = "BrightnessTextBox"
-SpeedTextBox.Size = UDim2.new(0, 35, 0, 20)
-SpeedTextBox.Position = UDim2.new(0, 10, 0, 50)
-SpeedTextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-SpeedTextBox.BorderSizePixel = 0
-SpeedTextBox.Text = tostring(currentBrightness)
-SpeedTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedTextBox.Font = Enum.Font.SourceSans
-SpeedTextBox.TextSize = 14
-SpeedTextBox.ClearTextOnFocus = false
-SpeedTextBox.Parent = MainFrame
+local AmbientTextBox = Instance.new("TextBox")
+AmbientTextBox.Name = "BrightnessTextBox"
+AmbientTextBox.Size = UDim2.new(0, 35, 0, 20)
+AmbientTextBox.Position = UDim2.new(0, 10, 0, 50)
+AmbientTextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AmbientTextBox.BorderSizePixel = 0
+AmbientTextBox.Text = tostring(currentBrightness)
+AmbientTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+AmbientTextBox.Font = Enum.Font.SourceSans
+AmbientTextBox.TextSize = 14
+AmbientTextBox.ClearTextOnFocus = false
+AmbientTextBox.Parent = MainFrame
 local TextCorner = Instance.new("UICorner")
 TextCorner.CornerRadius = UDim.new(0, 4)
-TextCorner.Parent = SpeedTextBox
+TextCorner.Parent = AmbientTextBox
 local SliderFrame = Instance.new("Frame")
 SliderFrame.Name = "SliderFrame"
 SliderFrame.Size = UDim2.new(0, 70, 0, 10)
@@ -111,25 +111,25 @@ BarCorner.CornerRadius = UDim.new(0, 4)
 BarCorner.Parent = SliderBar
 local function updateUIFromBrightness(targetBrightness)
 currentBrightness = math.clamp(targetBrightness, 0, 255)
-SpeedTextBox.Text = tostring(currentBrightness)
+AmbientTextBox.Text = tostring(currentBrightness)
 SliderBar.Size = UDim2.new(currentBrightness / 255, 0, 1, 0)
 AmbientCLR = Color3.fromRGB(currentBrightness, currentBrightness, currentBrightness)
 end
 local lastValidText = tostring(currentBrightness)
-SpeedTextBox:GetPropertyChangedSignal("Text"):Connect(function()
-if SpeedTextBox.Text == "" then return end
-local num = tonumber(SpeedTextBox.Text)
-if num and num >= 0 and num <= 255 and not string.find(SpeedTextBox.Text, "%D") then
-lastValidText = SpeedTextBox.Text
+AmbientTextBox:GetPropertyChangedSignal("Text"):Connect(function()
+if AmbientTextBox.Text == "" then return end
+local num = tonumber(AmbientTextBox.Text)
+if num and num >= 0 and num <= 255 and not string.find(AmbientTextBox.Text, "%D") then
+lastValidText = AmbientTextBox.Text
 currentBrightness = num
 SliderBar.Size = UDim2.new(currentBrightness / 255, 0, 1, 0)
 AmbientCLR = Color3.fromRGB(currentBrightness, currentBrightness, currentBrightness)
 else
-SpeedTextBox.Text = lastValidText
+AmbientTextBox.Text = lastValidText
 end
 end)
-SpeedTextBox.FocusLost:Connect(function()
-if SpeedTextBox.Text == "" then updateUIFromBrightness(0) end
+AmbientTextBox.FocusLost:Connect(function()
+if AmbientTextBox.Text == "" then updateUIFromBrightness(0) end
 end)
 local isDragging = false
 local function updateSliderFromMouse()
